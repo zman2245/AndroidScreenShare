@@ -1,5 +1,6 @@
 from django.db import models
 
-class Shot(models.Model):
-    title = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='images')
+class Click(models.Model):
+    xpercent = models.FloatField()
+    ypercent = models.FloatField()
+    is_valid = models.BooleanField()

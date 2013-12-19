@@ -26,3 +26,9 @@ def getimage(request):
         with open(FILE_UPLOAD_DIR, 'rb') as f:
             data = f.read()
             return HttpResponse(data, mimetype='image/png')
+
+def setclick(request):
+    xPercent = request.POST['xPercent']
+    yPercent = request.POST['yPercent']
+
+
