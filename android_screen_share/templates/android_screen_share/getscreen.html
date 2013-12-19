@@ -1,0 +1,19 @@
+<html>
+
+    <img id="screen" src="{{MEDIA_URL}}test.png?r=123" style="width:auto;height:500px"/>
+
+    <input type="hidden" id="imageurl" value="{% url 'getimage' %}" />
+
+    <script src="{{STATIC_URL}}jquery/js/jquery.js" type="text/javascript"></script>
+    <script>
+        window.setInterval(function(){
+            //alert("wtf");
+            $.get($('#imageurl').val(), function(data) {
+                var myScreen = document.getElementById("screen");
+
+                myScreen.src = "data:image/png;base64," + data;
+            });
+        }, 2000);
+
+    </script>
+</html>
