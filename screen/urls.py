@@ -1,17 +1,13 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
+from screen import views
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'socket', views.SocketView.as_view(), name='socket'),
     url(r'set', 'screen.views.setclick', name='setclick'),
-    # Examples:
-    # url(r'^$', 'android_screen_share.views.home', name='home'),
-    # url(r'^android_screen_share/', include('android_screen_share.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),

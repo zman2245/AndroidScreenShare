@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'getscreen', 'android_screen_share.views.getscreen'),
     url(r'getimage', 'android_screen_share.views.getimage', name='getimage'),
     url(r'click/', include('screen.urls', namespace='screen')),
+    url(r'screen/', include('screen.urls', namespace='screen'))
     # Examples:
     # url(r'^$', 'android_screen_share.views.home', name='home'),
     # url(r'^android_screen_share/', include('android_screen_share.foo.urls')),

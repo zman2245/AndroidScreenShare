@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
+from django.views import generic
 
 from screen.models import Click
 
@@ -33,3 +34,7 @@ def getclick(request):
     click.is_valud = False
 
     return HttpResponse(data, mimetype="application/json")
+
+class SocketView(generic.TemplateView):
+    template_name = "screen/socket.html"
+
