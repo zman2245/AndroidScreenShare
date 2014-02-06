@@ -1,17 +1,25 @@
 from MyWebsocketServer import WebSocketsHandler
+from MyDevsocketServer import DevSocketsHandler
 import SocketServer
 import threading
 
-class MyWebSocket:
+class MyConnection:
     """ wraps all the connection-to-a-websocket stuff """
-    
+    def __init__(self, type):
+        self.type = type
+
     def startServer(self):
         print("initializing")
-        server = ThreadedServer(("localhost", 9876), WebSocketsHandler)
+        if (self.type == "web"):
+            server = ThreadedServer(("localhost", 9876), WebSocketsHandler)
+        else:
+            print("listening for devices")
+            server = ThreadedServer(("192.168.30.94", 5000), DevSocketsHandler)
         server.observer = self
-        self.server_thread = threading.Thread(target=server.serve_forever)
-        self.server_thread.daemon = True
-        self.server_thread.start()
+        server.serve_forever()
+        #self.server_thread = threading.Thread(target=server.serve_forever)
+        #self.server_thread.daemon = True
+        #self.server_thread.start()
         #server.serve_forever()
 
     def send(self, message):
@@ -21,7 +29,7 @@ class MyWebSocket:
         return self.handler is not None
 
     def kill(self):
-        # TODO
+# TODO
         pass
 
     """ handler observer methods """
@@ -34,6 +42,3 @@ class MyWebSocket:
 
 class ThreadedServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     allow_reuse_address = True
-
-#ws = MyWebSocket()
-#ws.startServer()
