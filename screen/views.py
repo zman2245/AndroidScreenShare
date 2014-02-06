@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
 from django.views import generic
 
-from screen.models import Click
+from screen.models import Click, Screen
 
 @csrf_exempt
 def setclick(request):
@@ -35,6 +35,17 @@ def getclick(request):
 
     return HttpResponse(data, mimetype="application/json")
 
+def newscreen(request):
+    # TODO
+    data = simplejson.dumps({'success':'true'})
+    return HttpResponse(data, mimetype="application/json")
+
 class SocketView(generic.TemplateView):
     template_name = "screen/socket.html"
 
+class AllView(generic.ListView):
+    template_name = "screen/all.html"
+    context_object_name = "screens"
+
+    def get_queryset(self):
+        return Screen.objects.all()
