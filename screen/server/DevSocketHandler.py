@@ -5,7 +5,7 @@ from hashlib import sha1
 from mimetools import Message
 from StringIO import StringIO
 
-class DevSocketsHandler(SocketServer.BaseRequestHandler):
+class DevSocketHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         while True:
             print('handle...')

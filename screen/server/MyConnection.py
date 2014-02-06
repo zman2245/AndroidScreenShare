@@ -1,5 +1,5 @@
 from MyWebsocketServer import WebSocketsHandler
-from MyDevsocketServer import DevSocketsHandler
+from DevSocketHandler import DevSocketHandler
 import SocketServer
 import threading
 
@@ -14,7 +14,7 @@ class MyConnection:
             server = ThreadedServer(("localhost", 9876), WebSocketsHandler)
         else:
             print("listening for devices")
-            server = ThreadedServer(("192.168.30.94", 5000), DevSocketsHandler)
+            server = ThreadedServer(("192.168.30.94", 5000), DevSocketHandler)
         server.observer = self
         server.serve_forever()
         #self.server_thread = threading.Thread(target=server.serve_forever)
@@ -42,3 +42,6 @@ class MyConnection:
 
 class ThreadedServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     allow_reuse_address = True
+
+ws = MyConnection("dev")
+ws.startServer()
