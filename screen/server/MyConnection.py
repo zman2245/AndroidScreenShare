@@ -42,7 +42,6 @@ class MyConnection:
         self.observer.onConnected(handler)
 
     def onMessage(self, handler, src, message):
-        print ("onMessage ",message)
         self.observer.onMessage(handler, src, message)
 
 class ThreadedServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):

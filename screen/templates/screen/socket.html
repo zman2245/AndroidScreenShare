@@ -10,16 +10,41 @@
 
         <script src="{{STATIC_URL}}jquery/js/jquery.js" type="text/javascript"></script>
         <script>
+
+          var tmp = ""
+          var buffer = ""
           var myws = new WebSocket("ws://localhost:9876/");
           window.onload = function() {
             myws.onopen = function(e) { alert("opened"); }
             myws.onclose = function(e) { alert("closed"); }
             myws.onmessage = function(e) {
                 //alert("got: " + e.data);
-                var myScreen = document.getElementById("screen");
-                myScreen.src = "data:image/png;base64," + data;
+                console.log("length of part: " + e.data.length);
+                buffer = buffer + e.data;
+                console.log("length of whole so far: " + buffer.length);
+                if (e.data.slice(-1) == "*")
+                {
+                    buffer = buffer.substring(0, buffer.length - 1)
+                    console.log("completed buffer! length: " + buffer.length);
+                    var myScreen = document.getElementById("screen");
+                    tmp = buffer;
+                    myScreen.src = "data:image/jpeg;base64," + buffer;
+                    buffer = "";
+                }
             }
           };
+
+          $('#screen').click(function(e) {
+            var offset = $(this).offset();
+            xpos = e.clientX - offset.left;
+            ypos = e.clientY - offset.top;
+            var json = {};
+            json.type = 'tap';
+            json.x = xpos/$(this).width();
+            json.y = ypos/$(this).height();
+            alert(JSON.stringify(json));
+            myws.send(JSON.stringify(json) + '*');
+          });
         </script>
     </body>
 </html>

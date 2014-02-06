@@ -16,9 +16,11 @@ class Screen:
         print ("onConnection:")
 
     def onMessage(self, handler, src, message):
-        print ("onMessage ",message)
+        # print ("onMessage ",message)
         if (src == "device"):
             self.webConn.send(message)
+        else:
+            self.devConn.send(message)
 
 s = Screen()
 s.startServer()

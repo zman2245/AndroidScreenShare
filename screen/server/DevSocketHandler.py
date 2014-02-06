@@ -6,7 +6,6 @@ class DevSocketHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         self.server.observer.onConnected(self)
         while True:
-            print('handle...')
             self.data = self.request.recv(64000).strip()
             self.server.observer.onMessage(self, "device", self.data)
  

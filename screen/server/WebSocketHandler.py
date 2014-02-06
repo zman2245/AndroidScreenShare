@@ -15,7 +15,6 @@ class WebSocketHandler(SocketServer.StreamRequestHandler):
         self.handshake_done = False
  
     def handle(self):
-        print('handle...')
         while True:
             if not self.handshake_done:
                 self.handshake()
@@ -40,7 +39,7 @@ class WebSocketHandler(SocketServer.StreamRequestHandler):
         if length <= 125:
             self.request.send(chr(length))
         elif length >= 126 and length <= 65535:
-            self.request.send(126)
+            self.request.send(chr(126))
             self.request.send(struct.pack(">H", length))
         else:
             self.request.send(127)
@@ -65,7 +64,6 @@ class WebSocketHandler(SocketServer.StreamRequestHandler):
         self.server.observer.onConnected(self)
  
     def on_message(self, message):
-        print("on_message...")
         print(message)
         self.server.observer.onMessage(self, "web", message)
  
