@@ -67,7 +67,7 @@ class WebSocketHandler(SocketServer.StreamRequestHandler):
     def on_message(self, message):
         print("on_message...")
         print(message)
-        self.server.observer.onMessage(self, message)
+        self.server.observer.onMessage(self, "web", message)
  
 #if __name__ == "__main__":
 #server = SocketServer.TCPServer(

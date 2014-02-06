@@ -14,10 +14,11 @@ class Screen:
     """ handler observer methods """
     def onConnected(self, handler):
         print ("onConnection:")
-        self.handler = handler
 
-    def onMessage(self, handler, message):
+    def onMessage(self, handler, src, message):
         print ("onMessage ",message)
+        if (src == "device"):
+            self.webConn.send(message)
 
 s = Screen()
 s.startServer()

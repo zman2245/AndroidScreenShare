@@ -18,14 +18,15 @@ class MyConnection:
         else:
             print("listening for devices")
             server = ThreadedServer(("192.168.30.94", 5000), DevSocketHandler)
-        server.observer = self.observer
+        server.observer = self
         self.server_thread = threading.Thread(target=server.serve_forever)
         self.server_thread.daemon = True
         self.server_thread.start()
         #server.serve_forever()
 
     def send(self, message):
-        self.handler.send_message(message)
+        if hasattr(self, 'handler'):
+            self.handler.send_message(message)
 
     def isConnected(self):
         return self.handler is not None
@@ -33,6 +34,16 @@ class MyConnection:
     def kill(self):
 # TODO
         pass
+    
+    """ handler observer methods """
+    def onConnected(self, handler):
+        print ("onConnection:")
+        self.handler = handler
+        self.observer.onConnected(handler)
+
+    def onMessage(self, handler, src, message):
+        print ("onMessage ",message)
+        self.observer.onMessage(handler, src, message)
 
 class ThreadedServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     allow_reuse_address = True

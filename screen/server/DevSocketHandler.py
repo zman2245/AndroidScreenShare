@@ -1,16 +1,14 @@
-import struct
 import SocketServer
 from base64 import b64encode
-from hashlib import sha1
-from mimetools import Message
 from StringIO import StringIO
 
 class DevSocketHandler(SocketServer.BaseRequestHandler):
     def handle(self):
+        self.server.observer.onConnected(self)
         while True:
             print('handle...')
-            self.data = self.request.recv(1024).strip()
-            self.server.observer.onMessage(self, self.data)
+            self.data = self.request.recv(64000).strip()
+            self.server.observer.onMessage(self, "device", self.data)
  
     def send_message(self, message):
         self.request.send(message)

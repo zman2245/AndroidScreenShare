@@ -14,7 +14,11 @@
           window.onload = function() {
             myws.onopen = function(e) { alert("opened"); }
             myws.onclose = function(e) { alert("closed"); }
-            myws.onmessage = function(e) { alert("got: " + e.data); }
+            myws.onmessage = function(e) {
+                //alert("got: " + e.data);
+                var myScreen = document.getElementById("screen");
+                myScreen.src = "data:image/png;base64," + data;
+            }
           };
         </script>
     </body>
