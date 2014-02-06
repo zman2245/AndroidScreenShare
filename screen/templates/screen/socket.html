@@ -13,12 +13,13 @@
 
           var tmp = ""
           var buffer = ""
+
+          // TODO: Really? Hardcoded!
           var myws = new WebSocket("ws://localhost:9876/");
           window.onload = function() {
             myws.onopen = function(e) { alert("opened"); }
             myws.onclose = function(e) { alert("closed"); }
             myws.onmessage = function(e) {
-                //alert("got: " + e.data);
                 console.log("length of part: " + e.data.length);
                 buffer = buffer + e.data;
                 console.log("length of whole so far: " + buffer.length);
@@ -42,7 +43,7 @@
             json.type = 'tap';
             json.x = xpos/$(this).width();
             json.y = ypos/$(this).height();
-            alert(JSON.stringify(json));
+            // alert(JSON.stringify(json));
             myws.send(JSON.stringify(json) + '*');
           });
         </script>
