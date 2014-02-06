@@ -1,4 +1,3 @@
-
 import struct
 import SocketServer
 from base64 import b64encode
@@ -6,11 +5,8 @@ from hashlib import sha1
 from mimetools import Message
 from StringIO import StringIO
 
-class WebSocketsHandler(SocketServer.StreamRequestHandler):
+class WebSocketHandler(SocketServer.StreamRequestHandler):
     magic = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
-
-    def __init__(self, observer):
-        self.observer = observer
 
     def setup(self):
         print repr(self)
@@ -66,12 +62,12 @@ class WebSocketsHandler(SocketServer.StreamRequestHandler):
         response += 'Sec-WebSocket-Accept: %s\r\n\r\n' % digest
         print(response)
         self.handshake_done = self.request.send(response)
-        self.observer.onConnected(self)
+        self.server.observer.onConnected(self)
  
     def on_message(self, message):
         print("on_message...")
         print(message)
-        observer.onMessage(self, message)
+        self.server.observer.onMessage(self, message)
  
 #if __name__ == "__main__":
 #server = SocketServer.TCPServer(
@@ -80,25 +76,10 @@ class WebSocketsHandler(SocketServer.StreamRequestHandler):
 
 # for multi client support, use the following:
 # taken from https://gist.github.com/prasinoulhs/6314626
-class ThreadedServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
-    allow_reuse_address = True
+#class ThreadedServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+#    allow_reuse_address = True
 
-class MyWebSocket:
-    """ wraps all the connection-to-a-websocket stuff """
-    
-    def startServer(self):
-        print("initializing")
-        server = ThreadedServer(("localhost", 9876), WebSocketsHandler(self))
-        server.serve_forever()
-
-    """ handler observer methods """
-    def onConnected(self, handler):
-        print "MyWebSocket.onConnected"
-
-    def onMessage(self, handler, message):
-        print "MyWebSocket.onMessage ", message
-
-ws = MyWebSocket()
-ws.onConnected("hi", "")
-ws.startServer()
+#print("initializing")
+#server = ThreadedServer(("localhost", 9876), WebSocketsHandler)
+#server.serve_forever()
 
