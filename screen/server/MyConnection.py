@@ -4,7 +4,7 @@ import SocketServer
 import threading
 
 class MyConnection:
-    """ wraps all the connection-to-a-websocket stuff """
+    """ A connection to a remote client """
 
     """ observer must implement onConnected, onMessage"""
     def __init__(self, observer, src):
