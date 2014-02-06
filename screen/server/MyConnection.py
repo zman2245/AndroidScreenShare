@@ -17,7 +17,7 @@ class MyConnection:
             server = ThreadedServer(("localhost", 9876), WebSocketHandler)
         else:
             print("listening for devices")
-            server = ThreadedServer(("192.168.30.94", 5000), DevSocketHandler)
+            server = ThreadedServer(("192.168.30.94", 9877), DevSocketHandler)
         server.observer = self
         self.server_thread = threading.Thread(target=server.serve_forever)
         self.server_thread.daemon = True
